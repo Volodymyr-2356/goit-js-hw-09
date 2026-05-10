@@ -10,14 +10,13 @@ console.log(formEl);
 
 // Зберігаємо дані в localstorage
 formEl.addEventListener('input', (e) => {
-    const obj = {
-        name: formEl.elements.email.value,
-        message: formEl.elements.message.value
-    }
-    console.log(obj);
-    // const json = JSON.stringify(obj);
-    // localStorage.setItem(STORAGE_KEY, json);
-    saveToLS(STORAGE_KEY,obj)
+    
+    formData.email = formEl.elements.email.value;
+    formData.message = formEl.elements.message.value;
+    
+    
+
+    saveToLS(STORAGE_KEY,formData)
         
 })
 
@@ -25,27 +24,30 @@ formEl.addEventListener('input', (e) => {
 document.addEventListener('DOMContentLoaded', () => {
     const data = loadFromLS(STORAGE_KEY);
     console.log(data);
-    formEl.elements.email.value = data.name;
-    formEl.elements.message.value = data.message;
+    if (!data) return;
+    formData.email = data.email || "";
+    formData.message = data.message || "";
+
+    formEl.elements.email.value = formData.email;
+    formEl.elements.message.value = formData.message;
     
 })
 
 // При  відправкі форми збираємо дані з форми 
 formEl.addEventListener('submit', (e) => {
     e.preventDefault();
-    const formData = new FormData(formEl);
-    const obj = {
-        email: formData.get('email'),
-        message: formData.get('message')
-
-    }
-    if (obj.email.trim() === "" || obj.message.trim() === "") {
+    
+    if (formData.email.trim() === "" || formData.message.trim() === "") {
         alert('Fill please all fields');
         return;
     }
-    console.log(obj);
+    console.log(formData);
     localStorage.removeItem(STORAGE_KEY);
+
+    formData.email = "";
+    formData.message = "";
     formEl.reset();
+    console.log(formData)
     
 })
 
@@ -59,6 +61,7 @@ function saveToLS(key, value) {
 
 function loadFromLS(key) {
     const jsonData = localStorage.getItem(key);
+    
     const result = JSON.parse(jsonData);
     return result;
    

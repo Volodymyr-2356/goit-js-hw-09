@@ -62,8 +62,10 @@ function saveToLS(key, value) {
 
 function loadFromLS(key) {
     const jsonData = localStorage.getItem(key);
-    
-    const result = JSON.parse(jsonData);
-    return result;
+    if (jsonData) {
+
+        const result = JSON.parse(jsonData);
+        return result;
+    }
    
 }

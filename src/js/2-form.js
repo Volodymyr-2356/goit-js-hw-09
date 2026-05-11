@@ -1,5 +1,4 @@
 
-
 const formData = {
     email: "",
     message: ""
@@ -9,18 +8,6 @@ const STORAGE_KEY = 'feedback-form-state';
 
 const formEl = document.querySelector('.feedback-form');
 console.log(formEl);
-
-// Зберігаємо дані в localstorage
-formEl.addEventListener('input', (e) => {
-    
-    formData.email = formEl.elements.email.value;
-    formData.message = formEl.elements.message.value;
-    
-    
-
-    saveToLS(STORAGE_KEY,formData)
-        
-})
 
 // дістаЄМО дані з localstorage у форму
 document.addEventListener('DOMContentLoaded', () => {
@@ -34,6 +21,20 @@ document.addEventListener('DOMContentLoaded', () => {
     formEl.elements.message.value = formData.message;
     
 })
+
+// Зберігаємо дані в localstorage
+formEl.addEventListener('input', (e) => {
+    
+    formData.email = formEl.elements.email.value;
+    formData.message = formEl.elements.message.value;
+    
+    
+
+    saveToLS(STORAGE_KEY,formData)
+        
+})
+
+
 
 // При  відправкі форми збираємо дані з форми 
 formEl.addEventListener('submit', (e) => {
@@ -52,8 +53,6 @@ formEl.addEventListener('submit', (e) => {
     console.log(formData)
     
 })
-
-
 
 
 function saveToLS(key, value) {
